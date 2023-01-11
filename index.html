@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script> -->
+    <script src="aframe.min.js"></script>
+    <title>ARe you ready?</title>
+</head>
+
+<!-- ctrl+alt+i voor editor in de browser!  -->
+
+<body>
+    <a-scene stats>
+        <!-- assets -->
+        <a-assets>
+            <img id="grass" src="assets/grass.png">
+        </a-assets>
+
+        <!-- camera + cursor -->
+        <a-camera>
+            <a-cursor></a-cursor>
+        </a-camera>
+        
+        <!-- environment -->
+        <a-plane src="assets/grass.png" position="0 0 -2" rotation="-90 0 0" width="20" height="20" ></a-plane>
+
+    </a-scene>
+</body>
+</html>
