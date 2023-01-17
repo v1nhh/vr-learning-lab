@@ -16,7 +16,11 @@
         <!-- assets -->
         <a-assets>
             <img id="grass" src="assets/img/grass.png">
-            <a-asset-item id="school" src="assets/school.glb"></a-asset-item>
+            <img id="city" src="assets/img/city_panorama.jpg">
+
+            <a-asset-item id="school" src="assets/models/school.glb"></a-asset-item>
+            <a-asset-item id="pitch" src="assets/models/pitch.glb"></a-asset-item>
+            <a-asset-item id="bush" src="assets/models/bush.glb"></a-asset-item>
 
             <img id="giraffe" src="assets/UI/giraffe-chalk.png">
             <img id="crazy_animals_text" src="assets/UI/chalk-text-colour.png">
@@ -29,9 +33,13 @@
             <a-cursor></a-cursor>
         </a-camera>
         
+        <!-- sky -->
+        <a-sky src="#city"></a-sky>
+
         <!-- environment -->
         <a-plane src="#grass" position="0 0 -2" rotation="-90 0 0" width="50" height="150" ></a-plane>
         <a-gltf-model src="#school" position="0 0 -30" scale="0.01 0.01 0.01"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-20 0 10" rotation="0 90 0" scale=".8 .8 .8"></a-gltf-model>
 
         <!-- crazy animals -->
         <a-circle position="0 0.002 40" rotation="-90 0 0" scale="10 10 10" color="grey"></a-circle>
@@ -39,6 +47,9 @@
         <a-image src="#giraffe" position="0 0.007 44" rotation="-90 0 0" width="5" height="10"></a-image>
         <a-image src="#trex" position="-6 0.007 42" rotation="-90 -90 0" width="7" height="7"></a-image>
         <a-image src="#bear" position="5 0.007 44" rotation="-90 45 0" width="5" height="5"></a-image>
+
+        <!-- voetbalveldje -->
+        <a-gltf-model src="#pitch" position="6 0.05 10" rotation="0 30 0" scale=".2 .2 .2"></a-gltf-model>
 
     </a-scene>
 </body>
