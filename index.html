@@ -20,8 +20,16 @@
 
             <a-asset-item id="school" src="assets/models/school.glb"></a-asset-item>
             <a-asset-item id="pitch" src="assets/models/pitch.glb"></a-asset-item>
-            <a-asset-item id="bush" src="assets/models/bush.glb"></a-asset-item>
+            <a-asset-item id="chessboard" src="assets/models/schaakbord.glb"></a-asset-item>
 
+            <!-- flora -->
+            <a-asset-item id="bush" src="assets/models/bush.glb"></a-asset-item>
+            <a-asset-item id="tree" src="assets/models/boomcyl.glb"></a-asset-item>
+            <a-asset-item id="tree_vines" src="assets/models/boomcyl2.glb"></a-asset-item>
+
+            <a-asset-item id="fence" src="assets/models/hek.glb"></a-asset-item>
+            
+            <!-- crazy animals krijt -->
             <img id="giraffe" src="assets/UI/giraffe-chalk.png">
             <img id="crazy_animals_text" src="assets/UI/chalk-text-colour.png">
             <img id="bear" src="assets/UI/Bear.png">
@@ -29,27 +37,142 @@
         </a-assets>
 
         <!-- camera + cursor -->
-        <a-camera>
-            <a-cursor></a-cursor>
-        </a-camera>
+        <a-entity position="0 0 -5" rotation="0 180 0">
+            <a-camera>
+                <a-cursor></a-cursor>
+            </a-camera>
+        </a-entity>
+        
         
         <!-- sky -->
         <a-sky src="#city"></a-sky>
 
         <!-- environment -->
-        <a-plane src="#grass" position="0 0 -2" rotation="-90 0 0" width="50" height="150" ></a-plane>
+        <a-plane src="#grass" position="0 0 10" rotation="-90 0 0" width="56" height="80" repeat="3 3"></a-plane>
         <a-gltf-model src="#school" position="0 0 -30" scale="0.01 0.01 0.01"></a-gltf-model>
-        <a-gltf-model src="#bush" position="-20 0 10" rotation="0 90 0" scale=".8 .8 .8"></a-gltf-model>
 
+        <!-- bomen -->
+        <a-gltf-model src="#tree" position="3 0 42" scale=".4 .6 .4"></a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="5 0 44" scale=".3 .5 .3" rotation="0 60 0"></a-gltf-model>
+        <a-gltf-model src="#tree" position="-20 0 42" scale=".7 .7 .7"></a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="-21 0 36" scale=".3 .5 .3" rotation="0 80 0"></a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="20 0 42" scale=".7 .7 .7"></a-gltf-model>
+        <a-gltf-model src="#tree" position="20 0 17" scale=".5 .6 .4"></a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="-22 0 -5" scale=".3 .5 .3" rotation="0 50 0"></a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="20 0 -15" scale=".2 .2 .2" rotation="0 50 0"></a-gltf-model>
+        <a-gltf-model src="#tree" position="23 0 -15" scale=".3 .5 .3"></a-gltf-model>
+        <a-gltf-model src="#tree" position="22 0 -13" scale=".2 .3 .2"></a-gltf-model>
+
+        <!-- struiken -->
+        <a-gltf-model src="#bush" position="-24 0 10" rotation="0 86 0" scale="1.1 .7 .8"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-23.5 0 12" rotation="0 92 0" scale="1 .7 .9"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-24 0 14" rotation="0 90 0" scale="1.2 .6 .9"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-24 0 16" rotation="0 89 0" scale="1 .7 .8"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-23.5 0 18" rotation="0 88 0" scale="1.1 .6 .8"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-24 0 20" rotation="0 91 0" scale="1.2 .7 .8"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-24.5 0 22" rotation="0 87 0" scale="1.2 .7 .8"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-23.5 0 24" rotation="0 94 0" scale="1.1 .7 .9"></a-gltf-model>
+        <a-gltf-model src="#bush" position="-24 0 26" rotation="0 91 0" scale="1.2 .6 .8"></a-gltf-model>
+
+        <!-- HET HEK (precies 3 verschil om naast elkaar te zetten)-->
+
+        <!-- linkerkant -->
+        <a-entity id="linkerhek">
+            <a-gltf-model src="#fence" position="25 0 45.5" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 43" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 40" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 37" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 34" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 31" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 28" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 25" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 22" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 19" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 16" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 13" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 10" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 7" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 4" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 1" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -2" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -5" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -8" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -11" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -14" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -17" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -20" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="25 0 -23" scale=".25 .25 .25"></a-gltf-model>
+        </a-entity>
+        
+        <!-- achterkant (tegen de school aan)-->
+        <a-entity id="achterhek">
+            <a-gltf-model src="#fence" position="23.5 0 -24.5" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="20.5 0 -24.5" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-23.5 0 -24.5" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-20.5 0 -24.5" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+        </a-entity>
+
+        <!-- rechterkant -->
+        <a-entity id="rechterhek">
+            <a-gltf-model src="#fence" position="-25 0 45.5" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 43" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 40" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 37" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 34" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 31" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 28" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 25" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 22" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 19" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 16" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 13" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 10" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 7" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 4" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 1" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -2" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -5" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -8" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -11" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -14" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -17" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -20" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-25 0 -23" scale=".25 .25 .25"></a-gltf-model>
+        </a-entity>
+
+        <!-- voorkant -->
+        <a-entity id="voorhek">
+            <a-gltf-model src="#fence" position="23.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="20.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="17.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="14.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="11.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="8.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="5.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="2.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-0.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-3.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-6.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-9.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-12.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-15.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-18.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-21.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+            <a-gltf-model src="#fence" position="-23.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
+        </a-entity>
+        
         <!-- crazy animals -->
-        <a-circle position="0 0.002 40" rotation="-90 0 0" scale="10 10 10" color="grey"></a-circle>
-        <a-image src="#crazy_animals_text" position="0 0.005 35" rotation="-90 0 0" width="15" height="15"></a-image>
-        <a-image src="#giraffe" position="0 0.007 44" rotation="-90 0 0" width="5" height="10"></a-image>
-        <a-image src="#trex" position="-6 0.007 42" rotation="-90 -90 0" width="7" height="7"></a-image>
-        <a-image src="#bear" position="5 0.007 44" rotation="-90 45 0" width="5" height="5"></a-image>
+        <a-circle position="0 0.002 27" rotation="-90 0 0" scale="10 10 10" color="grey"></a-circle>
+        <a-image src="#crazy_animals_text" position="0 0.005 22" rotation="-90 0 0" width="15" height="15"></a-image>
+        <a-image src="#giraffe" position="0 0.007 31" rotation="-90 0 0" width="5" height="10"></a-image>
+        <a-image src="#trex" position="-6 0.007 29" rotation="-90 -90 0" width="7" height="7"></a-image>
+        <a-image src="#bear" position="5 0.007 31" rotation="-90 45 0" width="5" height="5"></a-image>
 
         <!-- voetbalveldje -->
         <a-gltf-model src="#pitch" position="6 0.05 10" rotation="0 30 0" scale=".2 .2 .2"></a-gltf-model>
+
+        <!-- schaakbord -->
+        <a-gltf-model src="#chessboard" position="-12 0.05 0" rotation="0 5 0" scale=".3 .3 .3"></a-gltf-model>
 
     </a-scene>
 </body>
