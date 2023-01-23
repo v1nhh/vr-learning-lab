@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script> -->
-    <script src="aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="js/aframe-physics-system.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
     <title>ARe you ready?</title>
 </head>
 
 <!-- ctrl+alt+i voor editor in de browser!  -->
 
 <body>
-    <a-scene stats>
+    <a-scene physics="debug: true">
         <!-- assets -->
         <a-assets>
             <img id="grass" src="assets/img/grass.png">
@@ -37,33 +39,60 @@
         </a-assets>
 
         <!-- camera + cursor -->
-        <a-entity position="0 0 -5" rotation="0 180 0">
-            <a-camera>
+        <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
+            <a-entity camera id="camera" position="0 1.6 0" look-controls>
                 <a-cursor></a-cursor>
-            </a-camera>
+            </a-entity>
         </a-entity>
-        
         
         <!-- sky -->
         <a-sky src="#city"></a-sky>
 
-        <!-- environment -->
-        <a-plane src="#grass" position="0 0 10" rotation="-90 0 0" width="56" height="80" repeat="3 3"></a-plane>
-        <a-gltf-model src="#school" position="0 0 -30" scale="0.01 0.01 0.01"></a-gltf-model>
+        <!-- ground -->
+        <a-plane static-body src="#grass" position="0 0 10" rotation="-90 0 0" width="56" height="80"></a-plane>
+
+        <!-- school -->
+        <a-entity id="school" position="0 -.2 -30">
+            <a-gltf-model id="school" src="#school" scale="0.01 0.01 0.01">
+                <a-box id="gebouw" static-body scale="40 15 20" visible="false"></a-box>
+            </a-gltf-model>
+            <a-box id="ingang" static-body position="0 0 13" scale="8 15 8" visible="false"></a-box>
+        </a-entity>
 
         <!-- bomen -->
-        <a-gltf-model src="#tree" position="3 0 42" scale=".4 .6 .4"></a-gltf-model>
-        <a-gltf-model src="#tree_vines" position="5 0 44" scale=".3 .5 .3" rotation="0 60 0"></a-gltf-model>
-        <a-gltf-model src="#tree" position="-20 0 42" scale=".7 .7 .7"></a-gltf-model>
-        <a-gltf-model src="#tree_vines" position="-21 0 36" scale=".3 .5 .3" rotation="0 80 0"></a-gltf-model>
-        <a-gltf-model src="#tree_vines" position="20 0 42" scale=".7 .7 .7"></a-gltf-model>
-        <a-gltf-model src="#tree" position="20 0 17" scale=".5 .6 .4"></a-gltf-model>
-        <a-gltf-model src="#tree_vines" position="-22 0 -5" scale=".3 .5 .3" rotation="0 50 0"></a-gltf-model>
-        <a-gltf-model src="#tree_vines" position="20 0 -15" scale=".2 .2 .2" rotation="0 50 0"></a-gltf-model>
-        <a-gltf-model src="#tree" position="23 0 -15" scale=".3 .5 .3"></a-gltf-model>
-        <a-gltf-model src="#tree" position="22 0 -13" scale=".2 .3 .2"></a-gltf-model>
+        <a-gltf-model src="#tree" position="3 0 42" scale=".4 .6 .4">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="5 0 44" scale=".3 .5 .3" rotation="0 60 0">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree" position="-20 0 42" scale=".7 .7 .7">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="-21 0 36" scale=".3 .5 .3" rotation="0 80 0">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="20 0 42" scale=".7 .7 .7">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree" position="20 0 17" scale=".5 .6 .4">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="-22 0 -5" scale=".3 .5 .3" rotation="0 50 0">
+            <a-cylinder static-body visible="false" height="5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree_vines" position="20 0 -15" scale=".2 .2 .2" rotation="0 50 0">
+            <a-cylinder static-body visible="false" height="5" radius=".5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree" position="23 0 -15" scale=".3 .5 .3">
+            <a-cylinder static-body visible="false" height="5" radius=".5"></a-cylinder>
+        </a-gltf-model>
+        <a-gltf-model src="#tree" position="22 0 -13" scale=".2 .3 .2">
+            <a-cylinder static-body visible="false" height="5" radius=".5"></a-cylinder>
+        </a-gltf-model>
 
         <!-- struiken -->
+        <a-box static-body position="-24 .5 18" scale="1 2 17" visible="false"></a-box>
         <a-gltf-model src="#bush" position="-24 0 10" rotation="0 86 0" scale="1.1 .7 .8"></a-gltf-model>
         <a-gltf-model src="#bush" position="-23.5 0 12" rotation="0 92 0" scale="1 .7 .9"></a-gltf-model>
         <a-gltf-model src="#bush" position="-24 0 14" rotation="0 90 0" scale="1.2 .6 .9"></a-gltf-model>
@@ -74,9 +103,10 @@
         <a-gltf-model src="#bush" position="-23.5 0 24" rotation="0 94 0" scale="1.1 .7 .9"></a-gltf-model>
         <a-gltf-model src="#bush" position="-24 0 26" rotation="0 91 0" scale="1.2 .6 .8"></a-gltf-model>
 
-        <!-- HET HEK (precies 3 verschil om naast elkaar te zetten)-->
+        <!-- HET HEK -->
 
         <!-- linkerkant -->
+        <a-plane static-body position="25 0 0" height="100" width="3" visible="false" rotation="0 90 90"></a-plane>
         <a-entity id="linkerhek">
             <a-gltf-model src="#fence" position="25 0 45.5" scale=".25 .25 .25"></a-gltf-model>
             <a-gltf-model src="#fence" position="25 0 43" scale=".25 .25 .25"></a-gltf-model>
@@ -105,6 +135,7 @@
         </a-entity>
         
         <!-- achterkant (tegen de school aan)-->
+        <a-plane static-body position="0 0 -24.5" height="60" width="3" visible="false" rotation="0 0 -90"></a-plane>
         <a-entity id="achterhek">
             <a-gltf-model src="#fence" position="23.5 0 -24.5" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
             <a-gltf-model src="#fence" position="20.5 0 -24.5" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
@@ -113,6 +144,7 @@
         </a-entity>
 
         <!-- rechterkant -->
+        <a-plane static-body position="-25 0 0" height="100" width="3" visible="false" rotation="0 90 90"></a-plane>
         <a-entity id="rechterhek">
             <a-gltf-model src="#fence" position="-25 0 45.5" scale=".25 .25 .25"></a-gltf-model>
             <a-gltf-model src="#fence" position="-25 0 43" scale=".25 .25 .25"></a-gltf-model>
@@ -141,6 +173,7 @@
         </a-entity>
 
         <!-- voorkant -->
+        <a-plane static-body position="0 0 47" height="60" width="3" visible="false" rotation="0 0 -90"></a-plane>
         <a-entity id="voorhek">
             <a-gltf-model src="#fence" position="23.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
             <a-gltf-model src="#fence" position="20.5 0 47" rotation="0 90 0" scale=".25 .25 .25"></a-gltf-model>
@@ -169,10 +202,20 @@
         <a-image src="#bear" position="5 0.007 31" rotation="-90 45 0" width="5" height="5"></a-image>
 
         <!-- voetbalveldje -->
-        <a-gltf-model src="#pitch" position="6 0.05 10" rotation="0 30 0" scale=".2 .2 .2"></a-gltf-model>
+        <a-entity id="pitch" position="6 0.05 10" rotation="0 30 0">
+            <a-gltf-model src="#pitch" scale=".2 .2 .2"></a-gltf-model>
+            <a-box id="doel1" static-body position="0 0.5 -2" scale=".2 2 3" visible="false"></a-box>
+            <a-box id="doel2" static-body position="15.7 0.5 -2" scale=".2 2 3" visible="false"></a-box>
+        </a-entity>
+        
 
         <!-- schaakbord -->
-        <a-gltf-model src="#chessboard" position="-12 0.05 0" rotation="0 5 0" scale=".3 .3 .3"></a-gltf-model>
+        <a-entity id="chessboard" position="-12 0.05 0" rotation="0 5 0">
+            <a-gltf-model src="#chessboard" scale=".3 .3 .3"></a-gltf-model>
+            <a-box static-body position="-5 0 -2.5" scale="1 3 5" visible="false"></a-box>
+            <a-box static-body position="-1 0 -2.5" scale="1 3 5" visible="false"></a-box>
+        </a-entity>
+        
 
     </a-scene>
 </body>
