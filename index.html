@@ -14,7 +14,7 @@
 <!-- ctrl+alt+i voor editor in de browser!  -->
 
 <body>
-    <a-scene physics="debug: true">
+    <a-scene physics>
         <!-- assets -->
         <a-assets>
             <img id="grass" src="assets/img/grass.png">
@@ -36,6 +36,9 @@
             <img id="crazy_animals_text" src="assets/UI/chalk-text-colour.png">
             <img id="bear" src="assets/UI/Bear.png">
             <img id="trex" src="assets/UI/t-rex-chalk.png">
+
+            <!-- kinderen -->
+            <a-asset-item id="boy" src="assets/models/fhc_crying_child.glb"></a-asset-item>
         </a-assets>
 
         <!-- camera + cursor -->
@@ -58,6 +61,11 @@
             </a-gltf-model>
             <a-box id="ingang" static-body position="0 0 13" scale="8 15 8" visible="false"></a-box>
         </a-entity>
+
+        <!-- kinderen -->
+        <a-gltf-model src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
+            <a-cylinder static-body visible="false" radius=".2" height="3"></a-cylinder>
+        </a-gltf-model>
 
         <!-- bomen -->
         <a-gltf-model src="#tree" position="3 0 42" scale=".4 .6 .4">
