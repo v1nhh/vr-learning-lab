@@ -8,6 +8,7 @@
     <script src="js/aframe-physics-system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="js/main.js"></script>
     <title>ARe you ready?</title>
 </head>
 
@@ -38,13 +39,23 @@
             <img id="trex" src="assets/UI/t-rex-chalk.png">
 
             <!-- kinderen -->
-            <a-asset-item id="boy" src="assets/models/fhc_crying_child.glb"></a-asset-item>
+            <a-asset-item id="boy" src="assets/models/boy.glb"></a-asset-item>
         </a-assets>
 
         <!-- camera + cursor -->
         <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
             <a-entity camera id="camera" position="0 1.6 0" look-controls>
-                <a-cursor></a-cursor>
+                <a-cursor id="js--cursor" visible="false"></a-cursor>
+                <a-entity
+                    animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+                    animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+                    animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+                    cursor="fuse: true; fuseTimeout: 500;"
+                    material="color: black; shader: flat"
+                    position="0 0 -1"
+                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
+                    raycaster="far: 20; interval: 1000; objects: .destinations">
+                </a-entity>
             </a-entity>
         </a-entity>
         
@@ -63,9 +74,17 @@
         </a-entity>
 
         <!-- kinderen -->
-        <a-gltf-model src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
-            <a-cylinder static-body visible="false" radius=".2" height="3"></a-cylinder>
-        </a-gltf-model>
+        <a-entity>
+            <a-gltf-model class="js--kid" src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
+                <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
+                    <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
+                    <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
+                    <a-text value="!" color="black" rotation="0 -90 0" position="-.03 0 -.05"></a-text>
+                    <a-text value="!" color="black" rotation="0 90 0" position=".03 0 .05"></a-text>
+                </a-entity>
+                <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
+            </a-gltf-model>
+        </a-entity>
 
         <!-- bomen -->
         <a-gltf-model src="#tree" position="3 0 42" scale=".4 .6 .4">
