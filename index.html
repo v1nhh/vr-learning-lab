@@ -33,28 +33,35 @@
             <a-asset-item id="fence" src="assets/models/hek.glb"></a-asset-item>
             
             <!-- crazy animals krijt -->
-            <img id="giraffe" src="assets/UI/giraffe-chalk.png">
-            <img id="crazy_animals_text" src="assets/UI/chalk-text-colour.png">
-            <img id="bear" src="assets/UI/Bear.png">
-            <img id="trex" src="assets/UI/t-rex-chalk.png">
+            <img id="giraffe" src="assets/img/giraffe-chalk.png">
+            <img id="crazy_animals_text" src="assets/img/chalk-text-colour.png">
+            <img id="bear" src="assets/img/Bear.png">
+            <img id="trex" src="assets/img/t-rex-chalk.png">
 
             <!-- kinderen -->
             <a-asset-item id="boy" src="assets/models/boy.glb"></a-asset-item>
+
+            <!-- HUD -->
+            <img id="translating" src="assets/UI/Vreemde taal.png">
+            <img id="translation_active" src="assets/UI/VertalingUI.png">
+            <img id="translation_background" src="assets/UI/TranslationNew.png">
+
         </a-assets>
 
         <!-- camera + cursor -->
         <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
             <a-entity camera id="camera" position="0 1.6 0" look-controls>
-                <a-cursor id="js--cursor" visible="false"></a-cursor>
+                
+                <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".2 .15 .2" visible="false"></a-image>
+                <a-image id="js--translation_active" src="#translation_active" position="-.5 -.2 -.4" scale=".15 .15 .15" visible="false"></a-image>
+                <a-image id="js--translation_background" src="#translation_background" position="0 -.2 -.4" scale=".6 .15 .15" visible="false"></a-image>
+                <a-text id="dialogue" value="hallo dit is een test dialoog" position="-.25 -.2 -.4" scale=".1 .1 .1" color="black" width="5" height="2" visible="false"></a-text>
                 <a-entity
-                    animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
-                    animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
-                    animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
-                    cursor="fuse: true; fuseTimeout: 500;"
+                    cursor
                     material="color: black; shader: flat"
                     position="0 0 -1"
                     geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;"
-                    raycaster="far: 20; interval: 1000; objects: .destinations">
+                    raycaster="far: 20; interval: 1000">
                 </a-entity>
             </a-entity>
         </a-entity>
@@ -75,7 +82,7 @@
 
         <!-- kinderen -->
         <a-entity>
-            <a-gltf-model class="js--kid" src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" id="noors" src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
                 <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
                     <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
                     <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
