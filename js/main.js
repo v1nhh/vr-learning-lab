@@ -179,4 +179,5 @@ window.onload = () => {
 function welVerstoppertje() {
   console.log("banaan");
   document.getElementById("varken").style.visibility = "hidden";
+  getResultScreen(1, "to play hide and seek");
 }
