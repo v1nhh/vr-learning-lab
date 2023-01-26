@@ -176,3 +176,9 @@ window.onload = () => {
     
 }
 
+// function welVerstoppertje() {
+//   console.log("banaan");
+//   document.getElementById("varken").style.visibility = "hidden";
+//   document.getElementById("js--resultscreen").setAttribute("visible", "true");
+//   getResultScreen(1, 0)
+// }
