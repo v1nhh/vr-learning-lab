@@ -176,3 +176,6 @@ window.onload = () => {
     
 }
 
+function welVerstoppertje() {
+  console.log("banaan");
+}
