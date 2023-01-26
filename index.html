@@ -55,10 +55,10 @@
                 <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".2 .15 .2" visible="false" material="" geometry=""></a-image>
                 <a-image id="js--translation_active" src="#translation_active" position="-.5 -.2 -.4" scale=".15 .15 .15" visible="false" material="" geometry=""></a-image>
                 <a-image id="js--translation_background" src="#translation_background" position="0 -.2 -.4" scale=".6 .15 .15" visible="false" material="" geometry=""></a-image>
-                <a-text id="dialogue" value="hallo dit is een test dialoog" position="-.25 -.2 -.4" scale=".1 .1 .1" color="black" width="5" height="2" visible="false" text=""></a-text>
+                <a-text id="quest1_dialogue" value="hallo dit is een test dialoog" position="-.25 -.2 -.4" scale=".1 .1 .1" color="black" width="5" height="2" visible="false" text=""></a-text>
 
                 <!-- resultaatscherm (het meeste hiervan wordt in main.js geregeld)-->
-                <a-entity id="js--resultscreen" position="1 0 -1" visible="true">
+                <a-entity id="js--resultscreen" position="1 0 -1" visible="false">
                     <a-plane id="js--results_frame" opacity="0.7" width="1"></a-plane>
                     <a-text id="js--results_title" value="placeholder title" scale=".2 .2 .2" position="0 .4 .001" align="center" width="5" color="black"></a-text>
                     <a-entity class="results_column" visible="false">
@@ -102,8 +102,23 @@
         </a-entity>
 
         <!-- kinderen -->
-        <a-entity>
-            <a-gltf-model class="js--kid" id="noors" src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
+        <!-- Noors kind / quest1 -->
+        <a-entity id="quest1" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" src="#boy">
+                <!-- quest muntje -->
+                <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
+                    <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
+                    <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
+                    <a-text value="!" color="black" rotation="0 -90 0" position="-.03 0 -.05"></a-text>
+                    <a-text value="!" color="black" rotation="0 90 0" position=".03 0 .05"></a-text>
+                </a-entity>
+                <!-- collision area -->
+                <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
+            </a-gltf-model>
+        </a-entity>
+        <!-- Tim / quest2 -->
+        <a-entity id="quest2" position="10 0 40" rotation="0 180 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" src="#boy">
                 <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
                     <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
                     <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
@@ -112,6 +127,31 @@
                 </a-entity>
                 <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
             </a-gltf-model>
+            <!-- tekstballon -->
+            <a-entity id="speech_bubble2" position="1 1.3 0" visible="false">
+                <a-plane height=".7">
+                    <a-text id="quest2_dialogue" align="center" width="1" height="0.7" color="black" value="hello this is a test sentence aaa aaaaaaaaaa aaaaaaaaa aaa aaaaaa!"></a-text>
+                    <a-triangle position="-.5 -.1 0" height=".1" width=".1" scale=".2 .2 .2"></a-triangle>
+                </a-plane>
+            </a-entity>
+        </a-entity>
+        <!-- Meisje / quest3 -->
+        <a-entity id="quest3" position="-20 0 30" rotation="0 90 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" src="#boy">
+                <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
+                    <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
+                    <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
+                    <a-text value="!" color="black" rotation="0 -90 0" position="-.03 0 -.05"></a-text>
+                    <a-text value="!" color="black" rotation="0 90 0" position=".03 0 .05"></a-text>
+                </a-entity>
+                <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
+            </a-gltf-model>
+            <a-entity id="speech_bubble3" position="1 1.3 0" visible="false">
+                <a-plane height=".7">
+                    <a-text id="quest3_dialogue" align="center" width="1" height="0.7" color="black" value="hello this is a test sentence aaa aaaaaaaaaa aaaaaaaaa aaa aaaaaa!"></a-text>
+                    <a-triangle position="-.5 -.1 0" height=".1" width=".1" scale=".2 .2 .2"></a-triangle>
+                </a-plane>
+            </a-entity>
         </a-entity>
 
         <!-- bomen -->
