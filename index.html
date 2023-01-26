@@ -8,6 +8,7 @@
     <script src="js/aframe-physics-system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="js/main.js"></script>
     <title>ARe you ready?</title>
 </head>
 
@@ -23,6 +24,7 @@
             <a-asset-item id="school" src="assets/models/school.glb"></a-asset-item>
             <a-asset-item id="pitch" src="assets/models/pitch.glb"></a-asset-item>
             <a-asset-item id="chessboard" src="assets/models/schaakbord.glb"></a-asset-item>
+            <a-asset-item id="swing" src="assets/models/schommel.glb"></a-asset-item>
 
             <!-- flora -->
             <a-asset-item id="bush" src="assets/models/bush.glb"></a-asset-item>
@@ -32,19 +34,57 @@
             <a-asset-item id="fence" src="assets/models/hek.glb"></a-asset-item>
             
             <!-- crazy animals krijt -->
-            <img id="giraffe" src="assets/UI/giraffe-chalk.png">
-            <img id="crazy_animals_text" src="assets/UI/chalk-text-colour.png">
-            <img id="bear" src="assets/UI/Bear.png">
-            <img id="trex" src="assets/UI/t-rex-chalk.png">
+            <img id="giraffe" src="assets/img/giraffe-chalk.png">
+            <img id="crazy_animals_text" src="assets/img/chalk-text-colour.png">
+            <img id="bear" src="assets/img/Bear.png">
+            <img id="trex" src="assets/img/t-rex-chalk.png">
 
             <!-- kinderen -->
-            <a-asset-item id="boy" src="assets/models/fhc_crying_child.glb"></a-asset-item>
+            <a-asset-item id="boy" src="assets/models/boy.glb"></a-asset-item>
+
+            <!-- HUD -->
+            <img id="translating" src="assets/UI/Vreemde taal.png">
+            <img id="translation_active" src="assets/UI/VertalingUI.png">
+            <img id="translation_background" src="assets/UI/TranslationNew.png">
+
         </a-assets>
 
         <!-- camera + cursor -->
-        <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
-            <a-entity camera id="camera" position="0 1.6 0" look-controls>
-                <a-cursor></a-cursor>
+        <a-entity id="rig" movement-controls kinematic-body position="10 0 37" rotation="0 180 0">
+            <a-entity camera="" id="camera" position="0 1.6 0" look-controls="" rotation="">
+                <!-- dialoog dingen -->
+                <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".2 .15 .2" visible="false" material="" geometry=""></a-image>
+                <a-image id="js--translation_active" src="#translation_active" position="-.5 -.2 -.4" scale=".15 .15 .15" visible="false" material="" geometry=""></a-image>
+                <a-image id="js--translation_background" src="#translation_background" position="0 -.2 -.4" scale=".6 .15 .15" visible="false" material="" geometry=""></a-image>
+                <a-text id="quest1_dialogue" value="hallo dit is een test dialoog" position="-.25 -.2 -.4" scale=".1 .1 .1" color="black" width="5" height="2" visible="false" text=""></a-text>
+
+                <!-- resultaatscherm (het meeste hiervan wordt in main.js geregeld)-->
+                <a-entity id="js--resultscreen" position="1 0 -1" visible="false">
+                    <a-plane id="js--results_frame" opacity="0.7" width="1"></a-plane>
+                    <a-text id="js--results_title" value="placeholder title" scale=".2 .2 .2" position="0 .4 .001" align="center" width="5" color="black"></a-text>
+                    <a-entity class="results_column" visible="false">
+                        <a-plane class="graph" color="green" height="0.4" width="0.3">
+                            <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
+                        </a-plane>
+                        <a-text class="choice" value="Play" scale=".2 .2 .2" color="black" align="center"></a-text>
+                    </a-entity>
+                    <a-entity class="results_column" visible="false">
+                        <a-plane class="graph" color="red" height="0.1" width="0.3">
+                            <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
+                        </a-plane>
+                        <a-text class="choice" value="Don't play" align="center" scale=".2 .2 .2" color="black"></a-text>
+                    </a-entity>
+                    <a-entity class="results_column" visible="false">
+                        <a-plane class="graph" color="red" height=".4" width=".3">
+                            <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
+                        </a-plane>
+                        <a-text class="choice" value="choice 3" align="center" scale=".2 .2 .2" color="black"></a-text>
+                    </a-entity>
+                </a-entity>
+
+                <!-- cursor -->
+                <a-entity cursor material="color: black; shader: flat" position="0 0 -1" geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;" raycaster="far: 20; interval: 1000">
+                </a-entity>
             </a-entity>
         </a-entity>
         
@@ -63,9 +103,57 @@
         </a-entity>
 
         <!-- kinderen -->
-        <a-gltf-model src="#boy" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
-            <a-cylinder static-body visible="false" radius=".2" height="3"></a-cylinder>
-        </a-gltf-model>
+        <!-- Noors kind / quest1 -->
+        <a-entity id="quest1" position="5 0 0" rotation="0 200 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" src="#boy">
+                <!-- quest muntje -->
+                <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
+                    <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
+                    <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
+                    <a-text value="!" color="black" rotation="0 -90 0" position="-.03 0 -.05"></a-text>
+                    <a-text value="!" color="black" rotation="0 90 0" position=".03 0 .05"></a-text>
+                </a-entity>
+                <!-- collision area -->
+                <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
+            </a-gltf-model>
+        </a-entity>
+        <!-- Tim / quest2 -->
+        <a-entity id="quest2" position="9 0 40" rotation="0 180 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" src="#boy">
+                <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
+                    <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
+                    <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
+                    <a-text value="!" color="black" rotation="0 -90 0" position="-.03 0 -.05"></a-text>
+                    <a-text value="!" color="black" rotation="0 90 0" position=".03 0 .05"></a-text>
+                </a-entity>
+                <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
+            </a-gltf-model>
+            <!-- tekstballon -->
+            <a-entity id="speech_bubble2" position="1 1.3 0" visible="false">
+                <a-plane height=".7">
+                    <a-text id="quest2_dialogue" align="center" width="1" height="0.7" color="black" value="hello this is a test sentence aaa aaaaaaaaaa aaaaaaaaa aaa aaaaaa!"></a-text>
+                    <a-triangle position="-.5 -.1 0" height=".1" width=".1" scale=".2 .2 .2"></a-triangle>
+                </a-plane>
+            </a-entity>
+        </a-entity>
+        <!-- Meisje / quest3 -->
+        <a-entity id="quest3" position="-20 0 30" rotation="0 90 0" scale="1.5 1.5 1.5">
+            <a-gltf-model class="js--kid" src="#boy">
+                <a-entity class="js--kid_quest" position="0 1.5 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear;" rotation="0 0 0">
+                    <a-cylinder class="js--kid_quest_border" color="yellow" rotation="0 0 90" radius=".25" height=".05" visible="false"></a-cylinder>
+                    <a-cylinder color="gold" rotation="0 0 90" radius=".2" height=".05"></a-cylinder>
+                    <a-text value="!" color="black" rotation="0 -90 0" position="-.03 0 -.05"></a-text>
+                    <a-text value="!" color="black" rotation="0 90 0" position=".03 0 .05"></a-text>
+                </a-entity>
+                <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="2"></a-cylinder>
+            </a-gltf-model>
+            <a-entity id="speech_bubble3" position="1 1.3 0" visible="false">
+                <a-plane height=".7">
+                    <a-text id="quest3_dialogue" align="center" width="1" height="0.7" color="black" value="hello this is a test sentence aaa aaaaaaaaaa aaaaaaaaa aaa aaaaaa!"></a-text>
+                    <a-triangle position="-.5 -.1 0" height=".1" width=".1" scale=".2 .2 .2"></a-triangle>
+                </a-plane>
+            </a-entity>
+        </a-entity>
 
         <!-- bomen -->
         <a-gltf-model src="#tree" position="3 0 42" scale=".4 .6 .4">
@@ -215,13 +303,19 @@
             <a-box id="doel1" static-body position="0 0.5 -2" scale=".2 2 3" visible="false"></a-box>
             <a-box id="doel2" static-body position="15.7 0.5 -2" scale=".2 2 3" visible="false"></a-box>
         </a-entity>
-        
 
         <!-- schaakbord -->
         <a-entity id="chessboard" position="-12 0.05 0" rotation="0 5 0">
             <a-gltf-model src="#chessboard" scale=".3 .3 .3"></a-gltf-model>
             <a-box static-body position="-5 0 -2.5" scale="1 3 5" visible="false"></a-box>
             <a-box static-body position="-1 0 -2.5" scale="1 3 5" visible="false"></a-box>
+        </a-entity>
+
+        <!-- schommel -->
+        <a-entity id="swing" position="11 0.05 41" rotation="0 95 0">
+            <a-gltf-model src="#swing" scale=".4 .4 .4"></a-gltf-model>
+            <a-box static-body visible="false" position="0 .5 2" scale="2 3 1.5"></a-box>
+            <a-box static-body visible="false" position="0 .5 -2" scale="2 3 1.5"></a-box>
         </a-entity>
         
 
