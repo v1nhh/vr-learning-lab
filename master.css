@@ -36,15 +36,3 @@
     "verstoppertje verstoppertje"
     "ja nee";
 }
-
-.vertaling{
-  background: white;
-  border: blue solid 10px;
-  border-radius: 5px;
-  margin: 20px;
-  float:left;
-}
-
-.vertaling > p{
-  padding: 10px;
-}
