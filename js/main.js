@@ -178,4 +178,5 @@ window.onload = () => {
 
 function welVerstoppertje() {
   console.log("banaan");
+  document.getElementById("varken").style.visibility = "hidden";
 }
