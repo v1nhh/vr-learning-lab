@@ -1,1 +1,50 @@
+.hoi{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+}
 
+#verstoppertje{
+  grid-area: verstoppertje;
+}
+
+#ja {
+  grid-area: ja;
+}
+
+#nee {
+  grid-area: nee;
+}
+
+.vraag{
+  background: lightgrey;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  margin-top: -50px;
+  margin-left: -50px;
+  display: grid;
+  grid-template-columns: 100px 100px;
+  grid-template-rows: auto;
+  column-gap: 10px;
+  grid-template-areas:
+    "verstoppertje verstoppertje"
+    "ja nee";
+}
+
+.vertaling{
+  background: white;
+  border: blue solid 10px;
+  border-radius: 5px;
+  margin: 20px;
+  float:left;
+}
+
+.vertaling > p{
+  padding: 10px;
+}
