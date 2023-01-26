@@ -15,7 +15,7 @@
 <!-- ctrl+alt+i voor editor in de browser!  -->
 
 <body>
-    <a-scene physics>
+    <a-scene physics="debug: true">
         <!-- assets -->
         <a-assets>
             <img id="grass" src="assets/img/grass.png">
@@ -25,6 +25,7 @@
             <a-asset-item id="pitch" src="assets/models/pitch.glb"></a-asset-item>
             <a-asset-item id="chessboard" src="assets/models/schaakbord.glb"></a-asset-item>
             <a-asset-item id="swing" src="assets/models/schommel.glb"></a-asset-item>
+            <a-asset-item id="sandbak" src="assets/models/sandbak.glb"></a-asset-item>
 
             <!-- flora -->
             <a-asset-item id="bush" src="assets/models/bush.glb"></a-asset-item>
@@ -50,7 +51,7 @@
         </a-assets>
 
         <!-- camera + cursor -->
-        <a-entity id="rig" movement-controls kinematic-body position="10 0 37" rotation="0 180 0">
+        <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
             <a-entity camera="" id="camera" position="0 1.6 0" look-controls="" rotation="">
                 <!-- dialoog dingen -->
                 <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".2 .15 .2" visible="false" material="" geometry=""></a-image>
@@ -171,7 +172,7 @@
         <a-gltf-model src="#tree_vines" position="20 0 42" scale=".7 .7 .7">
             <a-cylinder static-body visible="false" height="5"></a-cylinder>
         </a-gltf-model>
-        <a-gltf-model src="#tree" position="20 0 17" scale=".5 .6 .4">
+        <a-gltf-model src="#tree" position="20 0 18.5" scale=".5 .6 .4">
             <a-cylinder static-body visible="false" height="5"></a-cylinder>
         </a-gltf-model>
         <a-gltf-model src="#tree_vines" position="-22 0 -5" scale=".3 .5 .3" rotation="0 50 0">
@@ -318,6 +319,12 @@
             <a-box static-body visible="false" position="0 .5 -2" scale="2 3 1.5"></a-box>
         </a-entity>
         
+        <!-- zandbak -->
+        <a-entity id="sandbak" position="20 0.05 23" rotation="0 100 0">
+            <a-gltf-model src="#sandbak" scale=".3 .3 .3"></a-gltf-model>
+            <a-box static-body visible="false" scale="2 3 5" position="0 0 -2"></a-box>
+            <a-box static-body visible="false" scale="2 3 5" position="2 0 -3.5" rotation="0 -90 0"></a-box>
+        </a-entity>
 
     </a-scene>
 </body>
