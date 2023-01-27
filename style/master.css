@@ -1,0 +1,51 @@
+#question{
+  justify-content: center;
+  background: lightgrey;
+  opacity: 0.8;
+  border-radius: 10px;
+  padding: 1rem;
+  position: absolute;
+  top: 55%;
+  left: 65%;
+  display: grid;
+  column-gap: 20px;
+  grid-template-areas:
+    "question"
+    "buttons";
+}
+
+#question_text {
+  grid-area: "question";
+  font-family: Arial, Helvetica, sans-serif;
+  opacity: 1;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  grid-area: "buttons";
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1rem;
+}
+
+.answer {
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  opacity: 1;
+  background-color: rgb(196, 196, 196);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 10rem;
+}
+
+.answer:hover {
+  background-color: aquamarine;
+}
+

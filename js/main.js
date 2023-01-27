@@ -4,6 +4,10 @@ window.onload = () => {
     const coins = document.getElementsByClassName("js--kid_quest");
     const coin_borders = document.getElementsByClassName("js--kid_quest_border");
 
+    const kid1 = document.getElementById("quest1");
+    const kid2 = document.getElementById("quest2");
+    const kid3 = document.getElementById("quest3");
+
     const translating = document.getElementById("js--translating");
     const translation_active = document.getElementById("js--translation_active");
     const translation_background = document.getElementById("js--translation_background");
@@ -15,7 +19,11 @@ window.onload = () => {
     const speech_bubble2 = document.getElementById("speech_bubble2");
     const speech_bubble3 = document.getElementById("speech_bubble3");
 
-    // 3 kinderen ("quests"): Noors kind (quest1), Tim (quest2), kapitalistisch meisje (quest3)
+    let question = document.getElementById("question");
+    let questiontext = document.getElementById("question_text");
+    let answerbuttons = document.getElementsByClassName("answer");
+
+    // 3 kinderen ("quests"): Noors kind (quest1), Tim (quest2), kapitalistisch kind (quest3)
 
     var quest1_text1 = "Hey, I am from Norway, would you like to play a game of hide and seek?"
     var quest1_question = "Would you like to play hide and seek?"
@@ -23,6 +31,7 @@ window.onload = () => {
     var quest1_answer1_text1 = "You found me! Let’s play another round!"
     var quest1_answer1_text2 = "That was fun! I am going to do something else now thanks for playing with me."
     var quest1_answer2 = "Maybe later..."
+    var quest1_answers = ["Yes, of course!", "Maybe later..."]
 
     var quest2_text1 = "It is not fair! All of my friends are looking at the AR-animals, but I do not have smart glasses!\n\nCan I borrow yours to see them?"
     var quest2_question = "Will you lend your glasses to Tim?"
@@ -31,6 +40,7 @@ window.onload = () => {
     var quest2_answer1_text2 = "Those animals are awesome! Thanks for letting me borrow your glasses. I wish I had such cool glasses."
     var quest2_answer2 = "I'm sorry, I'd rather not let other people use them." 
     var quest2_answer2_text1 = "Nobody will let me use their glasses... It is not fair, only because mom says we do not have money for these glasses."
+    var quest2_answers = ["Yes, you can borrow them for a little while!", "I'm sorry, I'd rather not let other people use them."]
 
     var quest3_text1 = "Unfortunately I don't have AR-glasses. But it doesn't matter, I prefer my Pop-it anyway."
     var quest3_question = "Would you like to have a fidget too?"
@@ -42,6 +52,7 @@ window.onload = () => {
     var quest3_answer3_text1 = "Fidget-spinners are so cool! Sadly, mine broke during the holidays. Maybe we could buy a new one together sometime."
     var quest3_answer4 = "No, because I have these amazing AR-glasses."
     var quest3_answer4_text1 = "Oh... of course. You should try this as well, it works very calming."
+    var quest3_answers = ["Yes, I would like a Pop-it too!", "Yes, I would like to have a fidget-cube!", "Yes, I would like a fidget-spinner!", "No, because I have these amazing AR-glasses."]
 
     let quest1_progress = 0
     let quest2_progress = 0
@@ -82,15 +93,21 @@ window.onload = () => {
         }
 
         function interact(questnum) {
+            currentquest = questnum;
             if (questnum == 1) {
                 translate()
             } else {
                 let quest = "quest"+questnum;
-                console.log(quest);
                 let speech = eval(quest+"_dialogue");
                 let quest_dialogue = eval(quest+"_text1");
                 speech.setAttribute("value", quest_dialogue);
                 eval("speech_bubble"+questnum).setAttribute("visible", "true");
+                setTimeout(function() {
+                    eval("speech_bubble"+questnum).setAttribute("visible", "false");
+                    setQuestion(quest);
+                    question.style.display ='';
+                },3000)
+
             }
         }
 
@@ -107,6 +124,72 @@ window.onload = () => {
                 quest1_progress++;
             },1000)
         }
+
+        function setQuestion(quest) {
+            let answer_amount = eval(quest+"_answers").length;
+            questiontext.innerHTML = eval(quest+"_question");
+            for (i=0; i < answer_amount; i++) {
+                let answernum = i+1;
+                answerbuttons[i].innerHTML = eval(quest+"_answer"+answernum);
+                // answerbuttons[i].addEventListener("click", answer(i+1));
+                answerbuttons[i].style.display = '';
+                answerbuttons[i].onclick = function(){answer(answernum)};
+            }
+        }
+        
+    }
+
+    var currentquest;
+    function answer(num) {
+        console.log(num);
+        question.style.display ='none';
+        switch(currentquest) {
+            case 1:
+                quest1Handler(num);
+                break;
+            case 2:
+                quest2Handler(num);
+                break;
+            case 3:
+                quest3Handler(num);
+                break;
+            default:
+                console.log("no quest started");
+        }
+    }
+
+    function quest1Handler(answer) {
+
+    }
+
+    function quest2Handler(answer) {
+        let quest_dialogue = eval("quest2_answer"+answer+"_text1");
+        quest2_dialogue.setAttribute("value", quest_dialogue);
+        speech_bubble2.setAttribute("visible", "true");
+        setTimeout(function(){
+            speech_bubble2.setAttribute("visible", "false");
+            if (answer == 1) {
+                setTimeout(function(){
+                    kid2.setAttribute("animation", "property: position; to: 0 0 30; dur: 3000; easing: linear");
+                    setTimeout(function(){
+                        kid2.setAttribute("animation", "property: position; to: 9 0 40; dur: 3000; easing: linear");
+                        setTimeout(function(){
+                            let quest_dialogue = quest2_answer1_text2;
+                            quest2_dialogue.setAttribute("value", quest_dialogue);
+                            speech_bubble2.setAttribute("visible", "true");
+                        },1000)
+                    },2000);
+                    
+                },2000);
+                
+            }
+            getResultScreen(2,answer-1);
+        },3000);
+        
+    }
+
+    function quest3Handler(answer) {
+        
     }
 
     // resultaten
@@ -170,15 +253,9 @@ window.onload = () => {
             let newtextposition = `0 ${-height/2 -.1} 0`;
             choices[i].setAttribute("position", newtextposition);
         }
+        resultscreen.setAttribute("visible", "true");
     }
     
-    getResultScreen(1,0);
+    // getResultScreen(1,0);
     
 }
-
-// function welVerstoppertje() {
-//   console.log("banaan");
-//   document.getElementById("varken").style.visibility = "hidden";
-//   document.getElementById("js--resultscreen").setAttribute("visible", "true");
-//   getResultScreen(1, 0)
-// }
