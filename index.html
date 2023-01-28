@@ -64,29 +64,35 @@
                 <a-text id="quest1_dialogue" value="hallo dit is een test dialoog" position="-.25 -.2 -.4" scale=".1 .1 .1" color="black" width="5" height="2" visible="false" text=""></a-text>
 
                 <!-- quest beschrijving -->
-                <a-text id="quest_description" value="do this" position="0 0 -1" opacity="0" align="center"></a-text>
+                <a-text id="quest_description" value="do this" position="0 0 -1" opacity="0" align="center" visible="false"></a-text>
 
                 <!-- resultaatscherm (het meeste hiervan wordt in main.js geregeld)-->
                 <a-entity id="js--resultscreen" position="1 0 -1" visible="false">
                     <a-plane id="js--results_frame" opacity="0.7" width="1"></a-plane>
                     <a-text id="js--results_title" value="placeholder title" scale=".2 .2 .2" position="0 .4 .001" align="center" width="5" color="black"></a-text>
                     <a-entity class="results_column" visible="false">
-                        <a-plane class="graph" color="red" height="0.4" width="0.3">
+                        <a-plane class="graph" color="red">
                             <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
                         </a-plane>
                         <a-text class="choice" value="Play" scale=".2 .2 .2" color="black" align="center"></a-text>
                     </a-entity>
                     <a-entity class="results_column" visible="false">
-                        <a-plane class="graph" color="red" height="0.1" width="0.3">
+                        <a-plane class="graph" color="red">
                             <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
                         </a-plane>
                         <a-text class="choice" value="Don't play" align="center" scale=".2 .2 .2" color="black"></a-text>
                     </a-entity>
                     <a-entity class="results_column" visible="false">
-                        <a-plane class="graph" color="red" height=".4" width=".3">
+                        <a-plane class="graph" color="red">
                             <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
                         </a-plane>
                         <a-text class="choice" value="choice 3" align="center" scale=".2 .2 .2" color="black"></a-text>
+                    </a-entity>
+                    <a-entity class="results_column" visible="false">
+                        <a-plane class="graph" color="red">
+                            <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
+                        </a-plane>
+                        <a-text class="choice" value="choice 4" align="center" scale=".2 .2 .2" color="black"></a-text>
                     </a-entity>
                 </a-entity>
 
@@ -140,13 +146,13 @@
             <!-- tekstballon -->
             <a-entity id="speech_bubble2" position="1 1.3 0" visible="false">
                 <a-plane height=".7">
-                    <a-text id="quest2_dialogue" align="center" width="1" height="0.7" color="black" value="hello this is a test sentence!"></a-text>
+                    <a-text id="quest2_dialogue" align="center" width=".9" height="0.7" color="black" value="hello this is a test sentence!"></a-text>
                     <a-triangle position="-.5 -.1 0" height=".1" width=".1" scale=".2 .2 .2"></a-triangle>
                 </a-plane>
             </a-entity>
         </a-entity>
         <!-- pop-it kind / quest3 -->
-        <a-entity id="quest3" position="-20 0 30" rotation="0 90 0" scale="1.5 1.5 1.5">
+        <a-entity id="quest3" position="-20 0 20" rotation="0 90 0" scale="1.5 1.5 1.5">
             <a-gltf-model class="js--kid" src="#kid_purple" scale=".01 .01 .01">
                 <a-cylinder position="0 1 0" static-body visible="false" radius=".2" height="4"></a-cylinder>
             </a-gltf-model>
@@ -158,7 +164,7 @@
             </a-entity>
             <a-entity id="speech_bubble3" position="1 1.3 0" visible="false">
                 <a-plane height=".7">
-                    <a-text id="quest3_dialogue" align="center" width="1" height="0.7" color="black" value="hello this is a test sentence!"></a-text>
+                    <a-text id="quest3_dialogue" align="center" width=".9" height="0.7" color="black" value="hello this is a test sentence!"></a-text>
                     <a-triangle position="-.5 -.1 0" height=".1" width=".1" scale=".2 .2 .2"></a-triangle>
                 </a-plane>
             </a-entity>
@@ -337,6 +343,9 @@
             <button class="answer" style="display: none"></button>
             <button class="answer" style="display: none"></button>
         </section>
+    </div>
+    <div id="dismiss" style="display: none">
+        <button id="dismiss_button">Dismiss</button>
     </div>
 </body>
 </html>

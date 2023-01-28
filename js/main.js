@@ -202,9 +202,7 @@ window.onload = () => {
                     translation_active.setAttribute("visible", "false");
                     translation_background.setAttribute("visible", "false");
                     quest1_dialogue.setAttribute("visible", "false");
-                    
                 },3000)
-                
             };
         } else {
             setTimeout(function(){
@@ -220,6 +218,7 @@ window.onload = () => {
         setTimeout(function(){
             speech_bubble2.setAttribute("visible", "false");
             if (answer == 1) {
+                showQuestDescription("Wait for Tim by the swings");
                 kid2.setAttribute("position", "0 0 30");
                 setTimeout(function(){
                     kid2.setAttribute("position", "9 0 40");
@@ -232,14 +231,22 @@ window.onload = () => {
                             getResultScreen(2,answer-1);
                         }, 3000);
                     },1000)
-                },2000);
+                },5000);
+            } else {
+                getResultScreen(2,answer-1);
             }
-            getResultScreen(2,answer-1);
+            
         },3000);
     }
 
     function quest3Handler(answer) {
-
+        let quest_dialogue = eval("quest3_answer"+answer+"_text1");
+        quest3_dialogue.setAttribute("value", quest_dialogue);
+        speech_bubble3.setAttribute("visible", "true");
+        setTimeout(function(){
+            getResultScreen(3,answer-1);
+            speech_bubble3.setAttribute("visible", "false");
+        },3000);
     }
 
     // resultaten
@@ -250,6 +257,8 @@ window.onload = () => {
     let graphs = document.getElementsByClassName("graph");
     let graph_percentages = document.getElementsByClassName("percentage_in_graph");
     let choices = document.getElementsByClassName("choice");
+    let dismiss = document.getElementById("dismiss");
+    let dismiss_button = document.getElementById("dismiss_button");
     
 
     var results_quest1 = {
@@ -269,7 +278,7 @@ window.onload = () => {
     var results_quest3 = {
         choices_amount: 4,
         choices_in_title: ["to say you'd like a Pop-it", "to say you'd like a fidget-cube", "to say you'd like a fidget-spinner", "to say you don't need a fidget (because of your awesome AR-glasses)"],
-        choices_in_graph: ["Pop-it", "Fidget-cube", "Fidget-spinner", "No fidget"],
+        choices_in_graph: ["Pop-it", "Cube", "Spinner", "No fidget"],
         percentages: [27, 15, 34, 24],
     }
 
@@ -287,25 +296,36 @@ window.onload = () => {
 
         for(let i=0; i < choices_amount; i++){
             columns[i].setAttribute("visible", "true");
-
             let x = column_width * (i + 0.5) - (frame_width / 2)
             let y = -.25
 
             let height = questdata.percentages[i] / 200;
-            graphs[i].setAttribute("height", height);
             graphs[i].setAttribute("width", 0.6 / choices_amount);
 
             let newposition = `${x} ${y + (height / 2)} .001`;
             columns[i].setAttribute("position", newposition);
-
+            graphs[i].setAttribute("height", height);
             graph_percentages[i].setAttribute("value", questdata.percentages[i]+"%");
             choices[i].setAttribute("value", questdata.choices_in_graph[i]);
             let newtextposition = `0 ${-height/2 -.1} 0`;
             choices[i].setAttribute("position", newtextposition);
-        }
+        };
+        dismiss_button.onclick = function(){
+            resultscreen.setAttribute("visible", "false");
+            dismiss.style.display = "none";
+            resetResults();
+        };
         resultscreen.setAttribute("visible", "true");
+        dismiss.style.display = '';
+
     }
-    
-    // getResultScreen(1,0);
+
+    function resetResults() {
+        for (i=0; i < answerbuttons.length; i++) {
+            answerbuttons[i].style.display = 'none';
+            columns[i].setAttribute("visible", "false");
+            graphs[i].setAttribute("color", "red");
+        }
+    }
     
 }
