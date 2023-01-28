@@ -8,7 +8,6 @@
     <script src="js/aframe-physics-system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
-    <script src="https://supereggbert.github.io/aframe-htmlembed-component/dist/build.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="style/master.css">
     <title>ARe you ready?</title>
@@ -27,6 +26,8 @@
             <a-asset-item id="pitch" src="assets/models/pitch.glb"></a-asset-item>
             <a-asset-item id="chessboard" src="assets/models/schaakbord.glb"></a-asset-item>
             <a-asset-item id="swing" src="assets/models/schommel.glb"></a-asset-item>
+            <a-asset-item id="sandbak" src="assets/models/sandbak.glb"></a-asset-item>
+            <a-asset-item id="animalcaroussel" src="assets/models/animalcaroussel.glb"></a-asset-item>
 
             <!-- flora -->
             <a-asset-item id="bush" src="assets/models/bush.glb"></a-asset-item>
@@ -51,17 +52,21 @@
             <img id="translating" src="assets/UI/Vreemde taal.png">
             <img id="translation_active" src="assets/UI/VertalingUI.png">
             <img id="translation_background" src="assets/UI/TranslationNew.png">
+            <img id="crazy_animals_loading_img" src="assets/UI/CrazyAnimals.png">
 
         </a-assets>
 
         <!-- camera + cursor + HUD -->
-        <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
+        <a-entity id="rig" movement-controls kinematic-body position-reader position="0 0 -5" rotation="0 180 0">
             <a-entity camera id="camera" position="0 1.6 0" look-controls>
                 <!-- dialoog dingen voor quest1 -->
-                <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".2 .15 .2" visible="false" material="" geometry=""></a-image>
-                <a-image id="js--translation_active" src="#translation_active" position="-.5 -.2 -.4" scale=".15 .15 .15" visible="false" material="" geometry=""></a-image>
-                <a-image id="js--translation_background" src="#translation_background" position="0 -.2 -.4" scale=".6 .15 .15" visible="false" material="" geometry=""></a-image>
-                <a-text id="quest1_dialogue" value="hallo dit is een test dialoog" position="-.25 -.2 -.4" scale=".1 .1 .1" color="black" width="5" height="2" visible="false" text=""></a-text>
+                <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".3 .2 .3" visible="false"></a-image>
+                <a-image id="js--translation_active" src="#translation_active" position="-.5 -.2 -.4" scale=".15 .15 .15" visible="false"></a-image>
+                <a-image id="js--translation_background" src="#translation_background" position="-.1 -.2 -.4" scale=".5 .15 .15" visible="false"></a-image>
+                <a-text id="quest1_dialogue" value="hallo dit is een test dialoog aaaaaaaaaaaaaaaaaa aaaaaaaaaaaaa aaaa" position="-.1 -.2 -.4" scale=".1 .1 .1" color="black" width="4" height="2" visible="false" align="center"></a-text>
+
+                <!-- crazy animals laden -->
+                <a-image id="crazy_animals_loading" src="#crazy_animals_loading_img" position="-1 -.5 -1" scale="1 .5 .5" visible="false"></a-image>
 
                 <!-- quest beschrijving -->
                 <a-text id="quest_description" value="do this" position="0 0 -1" opacity="0" align="center" visible="false"></a-text>
@@ -69,7 +74,7 @@
                 <!-- resultaatscherm (het meeste hiervan wordt in main.js geregeld)-->
                 <a-entity id="js--resultscreen" position="1 0 -1" visible="false">
                     <a-plane id="js--results_frame" opacity="0.7" width="1"></a-plane>
-                    <a-text id="js--results_title" value="placeholder title" scale=".2 .2 .2" position="0 .4 .001" align="center" width="5" color="black"></a-text>
+                    <a-text id="js--results_title" value="placeholder title" scale=".2 .2 .2" position="0 .4 .001" align="center" width="4" color="black"></a-text>
                     <a-entity class="results_column" visible="false">
                         <a-plane class="graph" color="red">
                             <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
@@ -186,7 +191,7 @@
         <a-gltf-model src="#tree_vines" position="20 0 42" scale=".7 .7 .7">
             <a-cylinder static-body visible="false" height="5"></a-cylinder>
         </a-gltf-model>
-        <a-gltf-model src="#tree" position="20 0 17" scale=".5 .6 .4">
+        <a-gltf-model src="#tree" position="20 0 19" scale=".5 .6 .4">
             <a-cylinder static-body visible="false" height="5"></a-cylinder>
         </a-gltf-model>
         <a-gltf-model src="#tree_vines" position="-22 0 -5" scale=".3 .5 .3" rotation="0 50 0">
@@ -306,11 +311,14 @@
         </a-entity>
         
         <!-- crazy animals -->
-        <a-circle position="0 0.002 27" rotation="-90 0 0" scale="10 10 10" color="grey"></a-circle>
-        <a-image src="#crazy_animals_text" position="0 0.005 22" rotation="-90 0 0" width="15" height="15"></a-image>
-        <a-image src="#giraffe" position="0 0.007 31" rotation="-90 0 0" width="5" height="10"></a-image>
-        <a-image src="#trex" position="-6 0.007 29" rotation="-90 -90 0" width="7" height="7"></a-image>
-        <a-image src="#bear" position="5 0.007 31" rotation="-90 45 0" width="5" height="5"></a-image>
+        <a-circle id="crazy_animals" position="-5 0.002 30" rotation="-90 0 0" radius="5" color="grey">
+            <a-image src="#crazy_animals_text" position="0 1.5 0.007" width="7.5" height="7.5"></a-image>
+            <a-image src="#giraffe" position="0 -2.5 0.02" width="2" height="4.5" ></a-image>
+            <a-image src="#trex" position="-2.5 -2 0.02" rotation="0 0 -80" width="3.5" height="3.5"></a-image>
+            <a-image src="#bear" position="2.5 -2.5 0.02" rotation="0 0 50" width="2.5" height="2.5"></a-image>
+        </a-circle>
+
+        <a-gltf-model id="caroussel" src="#animalcaroussel" visible="false" position="-5 1 20" scale=".3 .3 .3" animation="property: rotation; from: 0 0 0; to: 0 360 0; loop: true; dur: 5000; easing: linear"></a-gltf-model>
 
         <!-- voetbalveldje -->
         <a-entity id="pitch" position="6 0.05 10" rotation="0 30 0">
@@ -333,6 +341,12 @@
             <a-box static-body visible="false" position="0 .5 -2" scale="2 3 1.5"></a-box>
         </a-entity>
         
+        <!-- zandbak -->
+        <a-entity id="sandbak" position="20 0.05 23" rotation="0 100 0">
+            <a-gltf-model src="#sandbak" scale=".3 .3 .3"></a-gltf-model>
+            <a-box static-body visible="false" scale="2 3 5" position="0 0 -2"></a-box>
+            <a-box static-body visible="false" scale="2 3 5" position="2 0 -3.5" rotation="0 -90 0"></a-box>
+        </a-entity>
 
     </a-scene>
     <div id="question" style="display: none">

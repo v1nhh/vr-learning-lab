@@ -55,47 +55,39 @@ window.onload = () => {
     var quest3_answers = ["Yes, I would like a Pop-it too!", "Yes, I would like to have a fidget-cube!", "Yes, I would like a fidget-spinner!", "No, because I have these amazing AR-glasses."]
 
     let quest1_progress = 0
-    let quest2_progress = 0
-    let quest3_progress = 0
 
     // audio
     var noors1 = new Audio('assets/voices/Nordic-First.wav');
     var noors2 = new Audio('assets/voices/Nordic-Second.wav');
     var noors3 = new Audio('assets/voices/Nordic-Third.wav');
 
+    let can_click = true;
     for(let i=0; i < kids.length; i++){
 
         kids[i].onmouseenter = (event) => {
-            // on hover
             coin_borders[i].setAttribute("visible", "true");
         }
 
         kids[i].onmouseleave = (event) => {
-            // on hover leave
             coin_borders[i].setAttribute("visible", "false");
         }
 
         kids[i].onclick = (event) => {
-            // on click
-            var playerLocation = player.getAttribute("position");
-            var kidLocation = kids[i].parentElement.getAttribute("position");
-            if (playerLocation.distanceTo(kidLocation) < 3) {
-                // start question
-                coins[i].setAttribute("visible", "false");
-                // if (!quest_progress.includes(1)) {
-                //     translate(1);
-                // }
-
-                interact(i+1);
-
+            console.log(can_click);
+            if (can_click === true) {
+                var playerLocation = player.getAttribute("position");
+                var kidLocation = kids[i].parentElement.getAttribute("position");
+                if (playerLocation.distanceTo(kidLocation) < 4) {
+                    coins[i].setAttribute("visible", "false");
+                    interact(i+1);
+                }
             }
-            
         }
 
         function interact(questnum) {
             currentquest = questnum;
             if (questnum == 1) {
-                translate()
+                translate();
             } else {
                 let quest = "quest"+questnum;
                 let speech = eval(quest+"_dialogue");
@@ -106,14 +98,16 @@ window.onload = () => {
                     eval("speech_bubble"+questnum).setAttribute("visible", "false");
                     setQuestion(quest);
                     question.style.display ='';
-                },3000)
+                },3000);
 
             }
         }
 
         function translate() {
             let textnum = quest1_progress + 1;
-            eval("noors"+textnum).play();
+            if (textnum < 4) {
+                eval("noors"+textnum).play();
+            };
             translating.setAttribute("visible", "true");
             setTimeout(function() {
                 translating.setAttribute("visible", "false");
@@ -125,7 +119,7 @@ window.onload = () => {
                     setTimeout(function(){
                         setQuestion("quest1");
                         question.style.display ='';
-                    },1000);
+                    },2000);
                 } else {
                     let hide_and_seek_progress = quest1_progress - 1
                     quest1_dialogue.setAttribute("value", eval("quest1_answer1_text"+hide_and_seek_progress));
@@ -165,6 +159,7 @@ window.onload = () => {
                 console.log("no quest started");
         }
     }
+
     const quest_description = document.getElementById("quest_description");
     function showQuestDescription(description) {
         quest_description.setAttribute("value", description);
@@ -178,6 +173,7 @@ window.onload = () => {
         },2000);
     }
 
+    // quests
     function quest1Handler(answer) {
         translation_active.setAttribute("visible", "false");
         translation_background.setAttribute("visible", "false");
@@ -186,23 +182,28 @@ window.onload = () => {
             let progress = 1;
             showQuestDescription("Find the Norwegian boy");
             kid1.setAttribute("position", "21 0 -23");
+            can_click = true;
             kid1.onclick = function(){
-                translate();
-                setTimeout(function(){
-                    if (progress == 1) {
-                        kid1.setAttribute("position", "-20 0 45");
-                        progress += 1;
-                        showQuestDescription("Find the Norwegian boy");
-                        setTimeout(function(){
-                            showQuestDescription("Again..");
-                        }, 3000);
-                    } else {
-                        getResultScreen(1, answer-1);
-                    }
-                    translation_active.setAttribute("visible", "false");
-                    translation_background.setAttribute("visible", "false");
-                    quest1_dialogue.setAttribute("visible", "false");
-                },3000)
+                if (can_click) {
+                    can_click = false;
+                    translate();
+                    setTimeout(function(){
+                        if (progress == 1) {
+                            kid1.setAttribute("position", "-20 0 45");
+                            progress += 1;
+                            showQuestDescription("Find the Norwegian boy");
+                            setTimeout(function(){
+                                showQuestDescription("Again..");
+                            }, 3000);
+                            can_click = true;
+                        } else {
+                            getResultScreen(1, answer-1);
+                        }
+                        translation_active.setAttribute("visible", "false");
+                        translation_background.setAttribute("visible", "false");
+                        quest1_dialogue.setAttribute("visible", "false");
+                    },3000);
+                };
             };
         } else {
             setTimeout(function(){
@@ -210,7 +211,7 @@ window.onload = () => {
             },2000);
         }
     }
-
+    let crazy_animals = document.getElementById("crazy_animals");
     function quest2Handler(answer) {
         let quest_dialogue = eval("quest2_answer"+answer+"_text1");
         quest2_dialogue.setAttribute("value", quest_dialogue);
@@ -219,7 +220,7 @@ window.onload = () => {
             speech_bubble2.setAttribute("visible", "false");
             if (answer == 1) {
                 showQuestDescription("Wait for Tim by the swings");
-                kid2.setAttribute("position", "0 0 30");
+                kid2.setAttribute("position", "-5 0 30");
                 setTimeout(function(){
                     kid2.setAttribute("position", "9 0 40");
                     setTimeout(function(){
@@ -262,21 +263,18 @@ window.onload = () => {
     
 
     var results_quest1 = {
-        choices_amount: 2,
         choices_in_title: ["to play hide and seek", "not to play hide and seek"],
         choices_in_graph: ["Play", "Don't play"],
         percentages: [76, 24],
     }
 
     var results_quest2 = {
-        choices_amount: 2,
         choices_in_title: ["to lend your glasses to Tim", "not to lend your glasses to Tim"],
         choices_in_graph: ["Lend glasses", "Don't lend glasses"],
         percentages: [83, 17],
     }
 
     var results_quest3 = {
-        choices_amount: 4,
         choices_in_title: ["to say you'd like a Pop-it", "to say you'd like a fidget-cube", "to say you'd like a fidget-spinner", "to say you don't need a fidget (because of your awesome AR-glasses)"],
         choices_in_graph: ["Pop-it", "Cube", "Spinner", "No fidget"],
         percentages: [27, 15, 34, 24],
@@ -284,7 +282,7 @@ window.onload = () => {
 
     function getResultScreen(questnum, player_choice) {
         var questdata = eval("results_quest" + questnum);
-        let choices_amount = questdata.choices_amount;
+        let choices_amount = questdata.choices_in_title.length;
         let frame_width = frame.getAttribute("width");
         let column_width = frame_width / choices_amount;
 
@@ -327,5 +325,31 @@ window.onload = () => {
             graphs[i].setAttribute("color", "red");
         }
     }
+
+    // crazy anmials ervaring
+
+    let caroussel = document.getElementById("caroussel");
+    let crazy_animals_position = document.getElementById("crazy_animals").getAttribute("position");
+    let loading = document.getElementById("crazy_animals_loading");
+    let still_on = false;
+    AFRAME.registerComponent('position-reader', {
+        tick: function () {
+            let crazy_animals_distance = this.el.object3D.position.distanceTo(crazy_animals_position);
+            if (crazy_animals_distance < 5) {
+                if (still_on === false) {
+                    loading.setAttribute("visible", "true");
+                }
+                setTimeout(function(){
+                    still_on = true;
+                    loading.setAttribute("visible", "false");
+                    caroussel.setAttribute("visible", "true");
+                },3000)
+            } else {
+                still_on = false;
+                loading.setAttribute("visible", "false");
+                caroussel.setAttribute("visible", "false");
+            }
+        }
+      });
     
 }
