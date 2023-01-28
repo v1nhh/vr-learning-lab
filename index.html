@@ -55,8 +55,8 @@
         </a-assets>
 
         <!-- camera + cursor + HUD -->
-        <a-entity id="rig" movement-controls kinematic-body position="10 0 37" rotation="0 180 0">
-            <a-entity camera="" id="camera" position="0 1.6 0" look-controls="" rotation="">
+        <a-entity id="rig" movement-controls kinematic-body position="0 0 -5" rotation="0 180 0">
+            <a-entity camera id="camera" position="0 1.6 0" look-controls>
                 <!-- dialoog dingen voor quest1 -->
                 <a-image id="js--translating" src="#translating" position="0 -.2 -.4" scale=".2 .15 .2" visible="false" material="" geometry=""></a-image>
                 <a-image id="js--translation_active" src="#translation_active" position="-.5 -.2 -.4" scale=".15 .15 .15" visible="false" material="" geometry=""></a-image>
@@ -68,7 +68,7 @@
                     <a-plane id="js--results_frame" opacity="0.7" width="1"></a-plane>
                     <a-text id="js--results_title" value="placeholder title" scale=".2 .2 .2" position="0 .4 .001" align="center" width="5" color="black"></a-text>
                     <a-entity class="results_column" visible="false">
-                        <a-plane class="graph" color="green" height="0.4" width="0.3">
+                        <a-plane class="graph" color="red" height="0.4" width="0.3">
                             <a-text class="percentage_in_graph" value="a%" scale=".2 .2 .2" color="black" align="center"></a-text>
                         </a-plane>
                         <a-text class="choice" value="Play" scale=".2 .2 .2" color="black" align="center"></a-text>

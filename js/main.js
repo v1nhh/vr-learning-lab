@@ -169,23 +169,22 @@ window.onload = () => {
         setTimeout(function(){
             speech_bubble2.setAttribute("visible", "false");
             if (answer == 1) {
+                kid2.setAttribute("position", "0 0 30");
                 setTimeout(function(){
-                    kid2.setAttribute("animation", "property: position; to: 0 0 30; dur: 3000; easing: linear");
+                    kid2.setAttribute("position", "9 0 40");
                     setTimeout(function(){
-                        kid2.setAttribute("animation", "property: position; to: 9 0 40; dur: 3000; easing: linear");
-                        setTimeout(function(){
-                            let quest_dialogue = quest2_answer1_text2;
-                            quest2_dialogue.setAttribute("value", quest_dialogue);
-                            speech_bubble2.setAttribute("visible", "true");
-                        },1000)
-                    },2000);
-                    
+                        let quest_dialogue = quest2_answer1_text2;
+                        quest2_dialogue.setAttribute("value", quest_dialogue);
+                        speech_bubble2.setAttribute("visible", "true");
+                        setTimeout(function() {
+                            speech_bubble2.setAttribute("visible", "false");
+                            getResultScreen(2,answer-1);
+                        }, 3000);
+                    },1000)
                 },2000);
-                
             }
             getResultScreen(2,answer-1);
         },3000);
-        
     }
 
     function quest3Handler(answer) {
