@@ -113,16 +113,26 @@ window.onload = () => {
 
         function translate() {
             let textnum = quest1_progress + 1;
-            eval("quest1"+textnum).play();
+            eval("noors"+textnum).play();
             translating.setAttribute("visible", "true");
             setTimeout(function() {
                 translating.setAttribute("visible", "false");
                 translation_active.setAttribute("visible", "true");
                 translation_background.setAttribute("visible", "true");
-                quest1_dialogue.setAttribute("value", eval("quest1_text"+textnum));
-                quest1_dialogue.setAttribute("visible", "true");
-                quest1_progress++;
-            },1000)
+                if (quest1_progress == 1) {
+                    quest1_dialogue.setAttribute("value", eval("quest1_text"+textnum));
+                    quest1_dialogue.setAttribute("visible", "true");
+                    setTimeout(function(){
+                        setQuestion("quest1");
+                        question.style.display ='';
+                    },1000);
+                } else {
+                    let hide_and_seek_progress = quest1_progress - 1
+                    quest1_dialogue.setAttribute("value", eval("quest1_answer1_text"+hide_and_seek_progress));
+                    quest1_dialogue.setAttribute("visible", "true");
+                };
+            },1000);
+            quest1_progress += 1;
         }
 
         function setQuestion(quest) {
@@ -131,7 +141,6 @@ window.onload = () => {
             for (i=0; i < answer_amount; i++) {
                 let answernum = i+1;
                 answerbuttons[i].innerHTML = eval(quest+"_answer"+answernum);
-                // answerbuttons[i].addEventListener("click", answer(i+1));
                 answerbuttons[i].style.display = '';
                 answerbuttons[i].onclick = function(){answer(answernum)};
             }
@@ -141,7 +150,6 @@ window.onload = () => {
 
     var currentquest;
     function answer(num) {
-        console.log(num);
         question.style.display ='none';
         switch(currentquest) {
             case 1:
@@ -157,9 +165,52 @@ window.onload = () => {
                 console.log("no quest started");
         }
     }
+    const quest_description = document.getElementById("quest_description");
+    function showQuestDescription(description) {
+        quest_description.setAttribute("value", description);
+        quest_description.setAttribute("visible", "true");
+        quest_description.setAttribute("animation", "property: opacity; to: 1;");
+        setTimeout(function(){
+            quest_description.setAttribute("animation", "property: opacity; to: 0;");
+            setTimeout(function(){
+                quest_description.setAttribute("visible", "false");
+            },2000);
+        },2000);
+    }
 
     function quest1Handler(answer) {
-
+        translation_active.setAttribute("visible", "false");
+        translation_background.setAttribute("visible", "false");
+        quest1_dialogue.setAttribute("visible", "false");
+        if (answer == 1) {
+            let progress = 1;
+            showQuestDescription("Find the Norwegian boy");
+            kid1.setAttribute("position", "21 0 -23");
+            kid1.onclick = function(){
+                translate();
+                setTimeout(function(){
+                    if (progress == 1) {
+                        kid1.setAttribute("position", "-20 0 45");
+                        progress += 1;
+                        showQuestDescription("Find the Norwegian boy");
+                        setTimeout(function(){
+                            showQuestDescription("Again..");
+                        }, 3000);
+                    } else {
+                        getResultScreen(1, answer-1);
+                    }
+                    translation_active.setAttribute("visible", "false");
+                    translation_background.setAttribute("visible", "false");
+                    quest1_dialogue.setAttribute("visible", "false");
+                    
+                },3000)
+                
+            };
+        } else {
+            setTimeout(function(){
+                getResultScreen(1, answer-1);
+            },2000);
+        }
     }
 
     function quest2Handler(answer) {
@@ -188,7 +239,7 @@ window.onload = () => {
     }
 
     function quest3Handler(answer) {
-        
+
     }
 
     // resultaten
