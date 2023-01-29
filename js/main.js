@@ -56,6 +56,7 @@ window.onload = () => {
 
     let quest1_progress = 0
     let quest1_active = false;
+    let in_quest = false;
     var donequests = [];
 
     // audio
@@ -64,11 +65,9 @@ window.onload = () => {
     var noors3 = new Audio('assets/voices/Nordic-Third.wav');
 
     let can_click = true;
-    let in_quest = false;
 
     var playerLocation;
     for(let i=0; i < kids.length; i++){
-
         kids[i].onmouseenter = (event) => {
             coin_borders[i].setAttribute("visible", "true");
         }
@@ -78,76 +77,83 @@ window.onload = () => {
         }
 
         kids[i].onclick = (event) => {
-            if (can_click) {
-                var kidLocation = kids[i].parentElement.getAttribute("position");
-                if (playerLocation.distanceTo(kidLocation) > 4) {
-                    alert("Get closer to the kid to talk to them.",false);
-                } else {
-                    coins[i].setAttribute("visible", "false");
-                    interact(i+1);
-                }
-            }
-        }
-
-        function interact(questnum) {
-            in_quest = true;
-            currentquest = questnum;
-            if (questnum == 1) {
-                translate();
-            } else {
-                let quest = "quest"+questnum;
-                let speech = eval(quest+"_dialogue");
-                let quest_dialogue = eval(quest+"_text1");
-                speech.setAttribute("value", quest_dialogue);
-                eval("speech_bubble"+questnum).setAttribute("visible", "true");
-                setTimeout(function() {
-                    eval("speech_bubble"+questnum).setAttribute("visible", "false");
-                    setQuestion(quest);
-                    question.style.display ='';
-                },3000);
-
-            }
-        }
-
-        function translate() {
-            quest1_active = true;
-            let textnum = quest1_progress + 1;
-            if (textnum < 4) {
-                eval("noors"+textnum).play();
-                translating.setAttribute("visible", "true");
-                setTimeout(function() {
-                    translating.setAttribute("visible", "false");
-                    translation_active.setAttribute("visible", "true");
-                    translation_background.setAttribute("visible", "true");
-                    if (quest1_progress == 1) {
-                        quest1_dialogue.setAttribute("value", eval("quest1_text"+textnum));
-                        quest1_dialogue.setAttribute("visible", "true");
-                        setTimeout(function(){
-                            setQuestion("quest1");
-                            question.style.display ='';
-                        },2000);
-                    } else {
-                        let hide_and_seek_progress = quest1_progress - 1
-                        quest1_dialogue.setAttribute("value", eval("quest1_answer1_text"+hide_and_seek_progress));
-                        quest1_dialogue.setAttribute("visible", "true");
-                    };
-                },1000);
-                quest1_progress += 1;
-            };
-            
-        }
-
-        function setQuestion(quest) {
-            let answer_amount = eval(quest+"_answers").length;
-            questiontext.innerHTML = eval(quest+"_question");
-            for (i=0; i < answer_amount; i++) {
-                let answernum = i+1;
-                answerbuttons[i].innerHTML = eval(quest+"_answer"+answernum);
-                answerbuttons[i].style.display = '';
-                answerbuttons[i].onclick = function(){answer(answernum)};
-            }
+            clickCheck(i);
         }
         
+    }
+
+    function setQuestion(questnum) {
+        let quest = "quest" + questnum;
+        let answer_amount = eval(quest+"_answers").length;
+        questiontext.innerHTML = eval(quest+"_question");
+        for (i=0; i < answer_amount; i++) {
+            let answernum = i+1;
+            answerbuttons[i].innerHTML = eval(quest+"_answer"+answernum);
+            answerbuttons[i].style.display = '';
+            answerbuttons[i].onclick = function(){answer(answernum)};
+        }
+    }
+
+    function interact(questnum) {
+        in_quest = true;
+        currentquest = questnum;
+        // can_click = false;
+        if (questnum == 1) {
+            translate();
+        } else {
+            let quest = "quest"+questnum;
+            let speech = eval(quest+"_dialogue");
+            let quest_dialogue = eval(quest+"_text1");
+            speech.setAttribute("value", quest_dialogue);
+            eval("speech_bubble"+questnum).setAttribute("visible", "true");
+            setTimeout(function() {
+                eval("speech_bubble"+questnum).setAttribute("visible", "false");
+                setQuestion(questnum);
+                question.style.display ='';
+            },3000);
+
+        }
+    }
+
+    function translate() {
+        quest1_active = true;
+        let textnum = quest1_progress + 1;
+        if (textnum < 4) {
+            eval("noors"+textnum).play();
+            translating.setAttribute("visible", "true");
+            setTimeout(function() {
+                translating.setAttribute("visible", "false");
+                translation_active.setAttribute("visible", "true");
+                translation_background.setAttribute("visible", "true");
+                if (quest1_progress == 1) {
+                    quest1_dialogue.setAttribute("value", eval("quest1_text"+textnum));
+                    quest1_dialogue.setAttribute("visible", "true");
+                    setTimeout(function(){
+                        setQuestion(1);
+                        question.style.display ='';
+                    },2000);
+                } else {
+                    let hide_and_seek_progress = textnum - 1;
+                    quest1_dialogue.setAttribute("value", eval("quest1_answer1_text"+hide_and_seek_progress));
+                    quest1_dialogue.setAttribute("visible", "true");
+                };
+            },1000);
+            quest1_progress += 1;
+        };
+        
+    }
+
+    function clickCheck(i) {
+        questnum = i+1;
+        if (can_click && !donequests.includes(questnum)) {
+            var kidLocation = kids[i].parentElement.getAttribute("position");
+            if (playerLocation.distanceTo(kidLocation) > 4) {
+                alert("Get closer to the kid to talk to them.",false);
+            } else {
+                coins[i].setAttribute("visible", "false");
+                interact(questnum);
+            }
+        }
     }
 
     var currentquest;
@@ -177,7 +183,7 @@ window.onload = () => {
             quest_description.setAttribute("width", "1");
         } else {
             quest_description.setAttribute("position", "0 0 -1");
-            quest_description.setAttribute("width", "5");
+            quest_description.setAttribute("width", "4");
         }
         quest_description.setAttribute("visible", "true");
         quest_description.setAttribute("animation", "property: opacity; to: 1;");
@@ -198,13 +204,10 @@ window.onload = () => {
             let progress = 1;
             alert("Find the Norwegian boy", true);
             kid1.setAttribute("position", "21 0 -23");
-            setTimeout(function(){
-                can_click = true;
-            },2000);
+            can_click = true;
             kid1.onclick = function(){
                 if (can_click) {
                     can_click = false;
-                    translate();
                     setTimeout(function(){
                         if (progress == 1) {
                             kid1.setAttribute("position", "-20 0 45");
@@ -215,10 +218,12 @@ window.onload = () => {
                                 can_click = true;
                             }, 3000);
                         } else {
-                            can_click = false;
-                            getResultScreen(1, answer-1);
                             quest1_active = false;
-                        }
+                            endQuest(1);
+                            setTimeout(function() {
+                                getResultScreen(1, answer-1);
+                            }, 2000);
+                        };
                         translation_active.setAttribute("visible", "false");
                         translation_background.setAttribute("visible", "false");
                         quest1_dialogue.setAttribute("visible", "false");
@@ -227,6 +232,7 @@ window.onload = () => {
             };
         } else {
             setTimeout(function(){
+                endQuest(1);
                 getResultScreen(1, answer-1);
                 quest1_active = false;
             },2000);
@@ -235,6 +241,7 @@ window.onload = () => {
 
     let crazy_animals = document.getElementById("crazy_animals");
     function quest2Handler(answer) {
+        can_click = false;
         let quest_dialogue = eval("quest2_answer"+answer+"_text1");
         quest2_dialogue.setAttribute("value", quest_dialogue);
         speech_bubble2.setAttribute("visible", "true");
@@ -260,9 +267,11 @@ window.onload = () => {
             }
             
         },3000);
+        endQuest(2);
     }
 
     function quest3Handler(answer) {
+        can_click = false;
         let quest_dialogue = eval("quest3_answer"+answer+"_text1");
         quest3_dialogue.setAttribute("value", quest_dialogue);
         speech_bubble3.setAttribute("visible", "true");
@@ -270,6 +279,7 @@ window.onload = () => {
             getResultScreen(3,answer-1);
             speech_bubble3.setAttribute("visible", "false");
         },3000);
+        endQuest(3);
     }
 
     // resultaten
@@ -303,13 +313,12 @@ window.onload = () => {
     }
 
     function endQuest(questnum) {
+        donequests.push(questnum);
         can_click = true;
         in_quest = false;
-        donequests.push(questnum);
     }
 
     function getResultScreen(questnum, player_choice) {
-        endQuest(questnum);
         var questdata = eval("results_quest" + questnum);
         let choices_amount = questdata.choices_in_title.length;
         let frame_width = frame.getAttribute("width");

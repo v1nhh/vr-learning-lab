@@ -57,8 +57,9 @@
   padding: 1rem;
   position: absolute;
   top: 82%;
-  left: 69.5%;
-  width: 15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15vw;
 }
 
 #dismiss_button {
