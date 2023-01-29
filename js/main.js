@@ -23,7 +23,7 @@ window.onload = () => {
     let questiontext = document.getElementById("question_text");
     let answerbuttons = document.getElementsByClassName("answer");
 
-    // 3 kinderen ("quests"): Noors kind (quest1), Tim (quest2), kapitalistisch kind (quest3)
+    // 3 kinderen: Noors kind (quest1), Tim (quest2), Pop-it kind (quest3)
 
     var quest1_text1 = "Hey, I am from Norway, would you like to play a game of hide and seek?"
     var quest1_question = "Would you like to play hide and seek?"
@@ -55,6 +55,8 @@ window.onload = () => {
     var quest3_answers = ["Yes, I would like a Pop-it too!", "Yes, I would like to have a fidget-cube!", "Yes, I would like a fidget-spinner!", "No, because I have these amazing AR-glasses."]
 
     let quest1_progress = 0
+    let quest1_active = false;
+    var donequests = [];
 
     // audio
     var noors1 = new Audio('assets/voices/Nordic-First.wav');
@@ -62,6 +64,9 @@ window.onload = () => {
     var noors3 = new Audio('assets/voices/Nordic-Third.wav');
 
     let can_click = true;
+    let in_quest = false;
+
+    var playerLocation;
     for(let i=0; i < kids.length; i++){
 
         kids[i].onmouseenter = (event) => {
@@ -73,11 +78,11 @@ window.onload = () => {
         }
 
         kids[i].onclick = (event) => {
-            console.log(can_click);
-            if (can_click === true) {
-                var playerLocation = player.getAttribute("position");
+            if (can_click) {
                 var kidLocation = kids[i].parentElement.getAttribute("position");
-                if (playerLocation.distanceTo(kidLocation) < 4) {
+                if (playerLocation.distanceTo(kidLocation) > 4) {
+                    alert("Get closer to the kid to talk to them.",false);
+                } else {
                     coins[i].setAttribute("visible", "false");
                     interact(i+1);
                 }
@@ -85,6 +90,7 @@ window.onload = () => {
         }
 
         function interact(questnum) {
+            in_quest = true;
             currentquest = questnum;
             if (questnum == 1) {
                 translate();
@@ -104,29 +110,31 @@ window.onload = () => {
         }
 
         function translate() {
+            quest1_active = true;
             let textnum = quest1_progress + 1;
             if (textnum < 4) {
                 eval("noors"+textnum).play();
+                translating.setAttribute("visible", "true");
+                setTimeout(function() {
+                    translating.setAttribute("visible", "false");
+                    translation_active.setAttribute("visible", "true");
+                    translation_background.setAttribute("visible", "true");
+                    if (quest1_progress == 1) {
+                        quest1_dialogue.setAttribute("value", eval("quest1_text"+textnum));
+                        quest1_dialogue.setAttribute("visible", "true");
+                        setTimeout(function(){
+                            setQuestion("quest1");
+                            question.style.display ='';
+                        },2000);
+                    } else {
+                        let hide_and_seek_progress = quest1_progress - 1
+                        quest1_dialogue.setAttribute("value", eval("quest1_answer1_text"+hide_and_seek_progress));
+                        quest1_dialogue.setAttribute("visible", "true");
+                    };
+                },1000);
+                quest1_progress += 1;
             };
-            translating.setAttribute("visible", "true");
-            setTimeout(function() {
-                translating.setAttribute("visible", "false");
-                translation_active.setAttribute("visible", "true");
-                translation_background.setAttribute("visible", "true");
-                if (quest1_progress == 1) {
-                    quest1_dialogue.setAttribute("value", eval("quest1_text"+textnum));
-                    quest1_dialogue.setAttribute("visible", "true");
-                    setTimeout(function(){
-                        setQuestion("quest1");
-                        question.style.display ='';
-                    },2000);
-                } else {
-                    let hide_and_seek_progress = quest1_progress - 1
-                    quest1_dialogue.setAttribute("value", eval("quest1_answer1_text"+hide_and_seek_progress));
-                    quest1_dialogue.setAttribute("visible", "true");
-                };
-            },1000);
-            quest1_progress += 1;
+            
         }
 
         function setQuestion(quest) {
@@ -144,6 +152,7 @@ window.onload = () => {
 
     var currentquest;
     function answer(num) {
+        can_click = false;
         question.style.display ='none';
         switch(currentquest) {
             case 1:
@@ -161,8 +170,15 @@ window.onload = () => {
     }
 
     const quest_description = document.getElementById("quest_description");
-    function showQuestDescription(description) {
-        quest_description.setAttribute("value", description);
+    function alert(text,big) {
+        quest_description.setAttribute("value", text);
+        if (!big) {
+            quest_description.setAttribute("position", "0 -.5 -1");
+            quest_description.setAttribute("width", "1");
+        } else {
+            quest_description.setAttribute("position", "0 0 -1");
+            quest_description.setAttribute("width", "5");
+        }
         quest_description.setAttribute("visible", "true");
         quest_description.setAttribute("animation", "property: opacity; to: 1;");
         setTimeout(function(){
@@ -180,9 +196,11 @@ window.onload = () => {
         quest1_dialogue.setAttribute("visible", "false");
         if (answer == 1) {
             let progress = 1;
-            showQuestDescription("Find the Norwegian boy");
+            alert("Find the Norwegian boy", true);
             kid1.setAttribute("position", "21 0 -23");
-            can_click = true;
+            setTimeout(function(){
+                can_click = true;
+            },2000);
             kid1.onclick = function(){
                 if (can_click) {
                     can_click = false;
@@ -191,13 +209,15 @@ window.onload = () => {
                         if (progress == 1) {
                             kid1.setAttribute("position", "-20 0 45");
                             progress += 1;
-                            showQuestDescription("Find the Norwegian boy");
+                            alert("Find the Norwegian boy",true);
                             setTimeout(function(){
-                                showQuestDescription("Again..");
+                                alert("Again..", true);
+                                can_click = true;
                             }, 3000);
-                            can_click = true;
                         } else {
+                            can_click = false;
                             getResultScreen(1, answer-1);
+                            quest1_active = false;
                         }
                         translation_active.setAttribute("visible", "false");
                         translation_background.setAttribute("visible", "false");
@@ -208,9 +228,11 @@ window.onload = () => {
         } else {
             setTimeout(function(){
                 getResultScreen(1, answer-1);
+                quest1_active = false;
             },2000);
         }
     }
+
     let crazy_animals = document.getElementById("crazy_animals");
     function quest2Handler(answer) {
         let quest_dialogue = eval("quest2_answer"+answer+"_text1");
@@ -219,7 +241,7 @@ window.onload = () => {
         setTimeout(function(){
             speech_bubble2.setAttribute("visible", "false");
             if (answer == 1) {
-                showQuestDescription("Wait for Tim by the swings");
+                alert("Wait for Tim by the swings", true);
                 kid2.setAttribute("position", "-5 0 30");
                 setTimeout(function(){
                     kid2.setAttribute("position", "9 0 40");
@@ -280,7 +302,14 @@ window.onload = () => {
         percentages: [27, 15, 34, 24],
     }
 
+    function endQuest(questnum) {
+        can_click = true;
+        in_quest = false;
+        donequests.push(questnum);
+    }
+
     function getResultScreen(questnum, player_choice) {
+        endQuest(questnum);
         var questdata = eval("results_quest" + questnum);
         let choices_amount = questdata.choices_in_title.length;
         let frame_width = frame.getAttribute("width");
@@ -327,14 +356,14 @@ window.onload = () => {
     }
 
     // crazy anmials ervaring
-
     let caroussel = document.getElementById("caroussel");
     let crazy_animals_position = document.getElementById("crazy_animals").getAttribute("position");
     let loading = document.getElementById("crazy_animals_loading");
     let still_on = false;
     AFRAME.registerComponent('position-reader', {
         tick: function () {
-            let crazy_animals_distance = this.el.object3D.position.distanceTo(crazy_animals_position);
+            playerLocation = this.el.object3D.position;
+            let crazy_animals_distance = playerLocation.distanceTo(crazy_animals_position);
             if (crazy_animals_distance < 5) {
                 if (still_on === false) {
                     loading.setAttribute("visible", "true");
